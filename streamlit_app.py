@@ -76,9 +76,12 @@ if st.button("✨ 生成八字分析"):
         #openai.api_key = st.secrets["openai"]["api_key"]
 
         try:
-            response = openai.Completion.create(
+            response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo", 
-                prompt=prompt,
+                messages=[
+                    {"role": "system", "content": "你是一个八字命理专家"},
+                    {"role": "user", "content": prompt}
+                ],
                 max_tokens=7,
                 temperature=0
             )
