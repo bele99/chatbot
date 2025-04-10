@@ -71,7 +71,7 @@ if st.button("✨ 生成八字分析"):
         st.json(bazi_result)
 
         # AI 分析内容
-        prompt = f"请根据以下八字信息为用户生成命理分析：\n{bazi_result}"
+        prompt = f"请根据以下八字信息为用户生成命理分析：binbin"# "\n{bazi_result}"
         openai.api_key = st.secrets["api_key"]
         #openai.api_key = st.secrets["openai"]["api_key"]
         
