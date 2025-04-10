@@ -76,22 +76,6 @@ if st.button("✨ 生成八字分析"):
         #openai.api_key = st.secrets["openai"]["api_key"]
 
         try:
-            # 使用简单的 API 调用进行测试
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[{"role": "user", "content": "Hello, world!"}]
-            )
-
-            # 如果成功，返回响应
-            print("API 连接成功！")
-            print(response)
-
-        except openai.OpenAIError as e:
-            print("API 请求失败，错误信息：{e}")
-        except Exception as e:
-            print(f"发生错误: {e}")
-        
-        try:
             response = openai.completions.create(
                 model="gpt-3.5-turbo-instruct", 
                 prompt=prompt,
