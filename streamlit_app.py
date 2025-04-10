@@ -103,7 +103,7 @@ if st.button("✨ 生成八字分析"):
         st.write(minge_analysis)
 
         # 导出 PDF
-        export_pdf(name or "用户", bazi_result, ai_analysis, liunian_analysis, minge_analysis)
+        #export_pdf(name or "用户", bazi_result, ai_analysis, liunian_analysis, minge_analysis)
 
 st.markdown("---")
 st.caption("© 2025 八字AI团队 | 本应用仅供娱乐与参考使用")
