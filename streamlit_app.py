@@ -32,7 +32,8 @@ def export_pdf(name, bazi_text, ai_analysis, liunian, minge):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", size=12)
-    
+
+    #
     pdf.add_font('NotoSans', '', 'fonts/NotoSansCJKsc-Regular.ttf', uni=True)
     pdf.set_font("NotoSans", size=12)
 
