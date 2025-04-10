@@ -74,6 +74,26 @@ if st.button("✨ 生成八字分析"):
         prompt = f"请根据以下八字信息为用户生成命理分析：binbin"# "\n{bazi_result}"
         openai.api_key = st.secrets["api_key"]
         #openai.api_key = st.secrets["openai"]["api_key"]
+
+        try:
+            # 使用简单的 API 调用进行测试
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[{"role": "user", "content": "Hello, world!"}]
+            )
+
+            # 如果成功，返回响应
+            print("API 连接成功！")
+            print(response)
+
+        except openai.error.AuthenticationError:
+            print("API 密钥错误，请检查您的 API 密钥。")
+        except openai.error.RateLimitError:
+            print("API 配额已超出，请检查您的使用情况。")
+        except openai.error.APIError as e:
+            print(f"API 请求失败，错误信息：{e}")
+        except Exception as e:
+            print(f"发生错误: {e}")
         
         try:
             response = openai.completions.create(
