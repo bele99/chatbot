@@ -56,7 +56,7 @@ with col1:
     name = st.text_input("姓名（可选）")
     gender = st.selectbox("性别", ["女", "男"])
 with col2:
-    birth_date = st.date_input("出生日期", value=datetime.date(2000, 1, 1))
+    birth_date = st.date_input("出生日期", value=datetime.date(2000, 1, 1), min_value=datetime.date(1920, 1, 1), max_value=datetime.date.today())
     birth_time = st.time_input("出生时间", value=datetime.time(12, 0))
 
 birth_place = st.text_input("出生地点（城市）", "Melbourne")
