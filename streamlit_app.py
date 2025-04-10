@@ -3,19 +3,21 @@
 import streamlit as st
 import datetime
 import openai
-from lunarcalendar import LunarDate
+
+
+from lunarcalendar import Lunar
 from datetime import datetime as dt
 
 def get_bazi_info(birth_date, birth_time, birth_place, gender):
     user_datetime = dt.combine(birth_date, birth_time)
 
     # 使用 lunarcalendar 计算农历
-    lunar_date = LunarDate.fromSolar(user_datetime.year, user_datetime.month, user_datetime.day)
+    lunar = Lunar.from_solar(user_datetime.year, user_datetime.month, user_datetime.day)
     
-    lunar_year = lunar_date.year
-    lunar_month = lunar_date.month
-    lunar_day = lunar_date.day
-    is_leap = lunar_date.is_leap_month
+    lunar_year = lunar.lunar_year
+    lunar_month = lunar.lunar_month
+    lunar_day = lunar.lunar_day
+    is_leap = lunar.is_leap_month
 
     # 返回模拟排盘结果（此处可接专业农历库做真实排盘）
     bazi_info = {
@@ -39,7 +41,6 @@ def get_bazi_info(birth_date, birth_time, birth_place, gender):
         "当前大运": "癸亥 (2021-2031)"
     }
     return bazi_info
-
 
 # --- Streamlit 页面配置 ---
 st.set_page_config(page_title="AI 八字分析", layout="centered")
