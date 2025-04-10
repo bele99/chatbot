@@ -10,7 +10,7 @@ import openai
 def get_bazi_info(birth_date, birth_time, birth_place, gender):
     user_datetime = dt.combine(birth_date, birth_time)
 
-    print(user_datetime)
+    print(user_datetime.year)
 
     # 使用 lunarcalendar 计算农历（正确的方式是创建一个 Lunar 对象）
     lunar = Lunar()
