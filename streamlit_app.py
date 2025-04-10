@@ -77,14 +77,12 @@ if st.button("✨ 生成八字分析"):
 
         try:
             response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo", 
-                messages=[
-                    {"role": "system", "content": "你是一个八字命理专家"},
-                    {"role": "user", "content": prompt}
-                ],
+                model="gpt-4", 
+                prompt=prompt,
                 max_tokens=7,
                 temperature=0
             )
+            print(response)
             ai_response = response['choices'][0]['message']['content']
         except openai.OpenAIError as e:
             ai_response = f"❌ OpenAI API 错误: {e}"
