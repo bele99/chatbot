@@ -56,10 +56,10 @@ with col1:
     name = st.text_input("姓名（可选）")
     gender = st.selectbox("性别", ["女", "男"])
 with col2:
-    birth_date = st.date_input("出生日期", value=datetime.date(1996, 3, 11))
-    birth_time = st.time_input("出生时间", value=datetime.time(10, 0))
+    birth_date = st.date_input("出生日期", value=datetime.date(2000, 1, 1))
+    birth_time = st.time_input("出生时间", value=datetime.time(12, 0))
 
-birth_place = st.text_input("出生地点（城市）", "Maidstone, Kent")
+birth_place = st.text_input("出生地点（城市）", "Melbourne")
 
 # --- 生成八字分析 ---
 if st.button("✨ 生成八字分析"):
