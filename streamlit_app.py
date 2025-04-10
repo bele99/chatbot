@@ -10,7 +10,8 @@ import openai
 from lunarcalendar import Converter, Solar, Lunar
 
 def get_bazi_info(birth_date, birth_time, birth_place, gender):
-    user_datetime = datetime.combine(birth_date, birth_time)
+    user_datetime = datetime.datetime.combine(birth_date, birth_time)
+
 
     # Convert Solar to Lunar
     solar = Solar(user_datetime.year, user_datetime.month, user_datetime.day)
