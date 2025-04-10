@@ -76,13 +76,13 @@ if st.button("✨ 生成八字分析"):
         #openai.api_key = st.secrets["openai"]["api_key"]
 
         try:
-            response = openai.completions.create(
-                model="gpt-3.5-turbo-instruct", 
+            response = openai.Completion.create(
+                model="gpt-3.5-turbo", 
                 prompt=prompt,
                 max_tokens=7,
                 temperature=0
             )
-            ai_response = response['choices'][0]['text']
+            ai_response = response['choices'][0]['message']['content']
         except openai.OpenAIError as e:
             ai_response = f"❌ OpenAI API 错误: {e}"
 
