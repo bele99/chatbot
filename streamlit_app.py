@@ -6,18 +6,20 @@ import datetime
 import openai
 
 
-# 获取八字信息的函数
-def get_bazi_info(birth_date, birth_time, birth_place, gender):
-    user_datetime = dt.combine(birth_date, birth_time)
+# 获取八字信息的函数import datetime
+from lunarcalendar import Converter, Solar, Lunar
 
-    
+def get_bazi_info(birth_date, birth_time, birth_place, gender):
+    user_datetime = datetime.combine(birth_date, birth_time)
+
     # Convert Solar to Lunar
     solar = Solar(user_datetime.year, user_datetime.month, user_datetime.day)
     lunar = Converter.Solar2Lunar(solar)
-    lunar_year = lunar.lunar_year
-    lunar_month = lunar.lunar_month
-    lunar_day = lunar.lunar_day
-    is_leap = lunar.is_leap_month
+
+    lunar_year = lunar.year  # Accessing lunar year
+    lunar_month = lunar.month  # Accessing lunar month
+    lunar_day = lunar.day  # Accessing lunar day
+    is_leap = lunar.isleap  # Check if it is a leap month
 
     # Return simulated Bazi info (you can replace it with actual logic)
     bazi_info = {
@@ -41,6 +43,7 @@ def get_bazi_info(birth_date, birth_time, birth_place, gender):
         "当前大运": "癸亥 (2021-2031)"
     }
     return bazi_info
+
 
 # --- Streamlit 页面配置 ---
 st.set_page_config(page_title="AI 八字分析", layout="centered")
