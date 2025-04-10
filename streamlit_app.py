@@ -1,17 +1,17 @@
 # AI 八字网页版 MVP 原型 - 使用 Streamlit
-
+from lunarcalendar import Lunar
+from datetime import datetime as dt
 import streamlit as st
 import datetime
 import openai
 
-from lunarcalendar import Lunar
-from datetime import datetime as dt
-
+# 获取八字信息的函数
 def get_bazi_info(birth_date, birth_time, birth_place, gender):
     user_datetime = dt.combine(birth_date, birth_time)
 
-    # 使用 lunarcalendar 计算农历
-    lunar_date = Lunar.from_solar(user_datetime.year, user_datetime.month, user_datetime.day)
+    # 使用 lunarcalendar 计算农历（正确的方式是创建一个 Lunar 对象）
+    lunar = Lunar()
+    lunar_date = lunar.solar_to_lunar(user_datetime.year, user_datetime.month, user_datetime.day)
 
     lunar_year = lunar_date.lunar_year
     lunar_month = lunar_date.lunar_month
@@ -40,8 +40,6 @@ def get_bazi_info(birth_date, birth_time, birth_place, gender):
         "当前大运": "癸亥 (2021-2031)"
     }
     return bazi_info
-
-
 
 # --- Streamlit 页面配置 ---
 st.set_page_config(page_title="AI 八字分析", layout="centered")
@@ -84,3 +82,4 @@ if st.button("✨ 生成八字分析"):
 
 st.markdown("---")
 st.caption("© 2025 八字AI团队 | 仅供娱乐与参考")
+
