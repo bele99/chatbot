@@ -77,7 +77,7 @@ if st.button("✨ 生成八字分析"):
         
         try:
             response = openai.completions.create(
-                model="gpt-3.5-turbo", 
+                model="gpt-3.5-turbo-instruct", 
                 prompt=prompt,
                 max_tokens=100
             )
