@@ -1,4 +1,4 @@
-pip install lunarcalendar
+!pip install lunarcalendar
 
 # AI 八字网页版 MVP 原型 - 使用 Streamlit
 import streamlit as st
