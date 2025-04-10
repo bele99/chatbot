@@ -61,6 +61,7 @@ birth_place = st.text_input("出生地点（城市）", "Maidstone, Kent")
 # --- 生成八字分析 ---
 if st.button("✨ 生成八字分析"):
     with st.spinner("排盘中，请稍候..."):
+        print(birth_date, birth_time, birth_place, gender)
         bazi_result = get_bazi_info(birth_date, birth_time, birth_place, gender)
 
         st.subheader("🌿 八字排盘结果")
