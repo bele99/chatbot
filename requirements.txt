@@ -3,3 +3,4 @@ openai
 convertdate
 ephem
 lunarcalendar
+fpdf
