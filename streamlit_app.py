@@ -32,7 +32,11 @@ def export_pdf(name, bazi_text, ai_analysis, liunian, minge):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", size=12)
-
+    
+    # 使用中文字体（思源黑体或其他 TTF）
+    pdf.add_font("Noto", "", "NotoSerifCJKsc-Regular", uni=True)
+    pdf.set_font("Noto", size=12)
+    
     def write_line(text): 
         pdf.multi_cell(0, 10, text)
 
