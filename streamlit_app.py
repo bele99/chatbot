@@ -73,15 +73,15 @@ if st.button("✨ 生成八字分析"):
         # AI 分析内容
         prompt = f"请根据以下八字信息为用户生成命理分析：\n{bazi_result}"
         openai.api_key = st.secrets["openai_api_key"]
+
         try:
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[{"role": "user", "content": prompt}]
+            response = openai.completions.create(
+                model="gpt-3.5-turbo", 
+                prompt=prompt,
+                max_tokens=100
             )
-            ai_response = response["choices"][0]["message"]["content"]
-        except openai.error.RateLimitError:
-            ai_response = "❌ OpenAI 配额已超出，请检查 API 使用状态或更换 API 密钥。"
-        except openai.error.OpenAIError as e:  # Catch any OpenAI errors
+            ai_response = response['choices'][0]['text']
+        except openai.OpenAIError as e:
             ai_response = f"❌ OpenAI API 错误: {e}"
 
         st.subheader("📖 AI 命理解读")
