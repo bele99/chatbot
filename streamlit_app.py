@@ -43,6 +43,7 @@ def get_bazi_info(birth_date, birth_time, birth_place, gender):
     return bazi_info
 
 
+
 # --- Streamlit 页面配置 ---
 st.set_page_config(page_title="AI 八字分析", layout="centered")
 st.title("🔮 AI 八字排盘与分析")
