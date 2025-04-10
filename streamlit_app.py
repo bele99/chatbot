@@ -14,8 +14,8 @@ def get_bazi_info(birth_date, birth_time, birth_place, gender):
 
     # 使用 lunarcalendar 计算农历（正确的方式是创建一个 Lunar 对象）
     lunar = Lunar()
-    print(lunar(user_datetime.year, user_datetime.month, user_datetime.day))
-    lunar_date = lunar(user_datetime.year, user_datetime.month, user_datetime.day)
+
+    lunar_date = Lunar.from_date(user_datetime.year, user_datetime.month, user_datetime.day)
 
     lunar_year = lunar_date.lunar_year
     lunar_month = lunar_date.lunar_month
