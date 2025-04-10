@@ -1,56 +1,87 @@
+# AI 八字网页版 MVP 原型 - 使用 Streamlit
+
 import streamlit as st
-from openai import OpenAI
+import datetime
+import openai
 
-# Show title and description.
-st.title("💬 Chatbot")
-st.write(
-    "This is a simple chatbot that uses OpenAI's GPT-3.5 model to generate responses. "
-    "To use this app, you need to provide an OpenAI API key, which you can get [here](https://platform.openai.com/account/api-keys). "
-    "You can also learn how to build this app step by step by [following our tutorial](https://docs.streamlit.io/develop/tutorials/llms/build-conversational-apps)."
-)
+st.set_page_config(page_title="AI 八字分析", layout="centered")
+st.title("🔮 AI 八字排盘与分析")
 
-# Ask user for their OpenAI API key via `st.text_input`.
-# Alternatively, you can store the API key in `./.streamlit/secrets.toml` and access it
-# via `st.secrets`, see https://docs.streamlit.io/develop/concepts/connections/secrets-management
-openai_api_key = st.text_input("OpenAI API Key", type="password")
-if not openai_api_key:
-    st.info("Please add your OpenAI API key to continue.", icon="🗝️")
-else:
+# 用户输入出生信息
+col1, col2 = st.columns(2)
+with col1:
+    name = st.text_input("姓名（可选）")
+    gender = st.selectbox("性别", ["女", "男"])
+with col2:
+    birth_date = st.date_input("出生日期", value=datetime.date(1996, 3, 11))
+    birth_time = st.time_input("出生时间", value=datetime.time(10, 0))
 
-    # Create an OpenAI client.
-    client = OpenAI(api_key=openai_api_key)
+birth_place = st.text_input("出生地点（城市）", "Maidstone, Kent")
 
-    # Create a session state variable to store the chat messages. This ensures that the
-    # messages persist across reruns.
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
+if st.button("✨ 生成八字分析"):
+    with st.spinner("排盘中，请稍候..."):
+        # 使用 get_bazi_info 获取排盘数据
+        bazi_result = get_bazi_info(birth_date, birth_time, birth_place, gender)
 
-    # Display the existing chat messages via `st.chat_message`.
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+        # 展示基础信息
+        st.subheader("🌿 八字排盘结果")
+        st.json(bazi_result)
 
-    # Create a chat input field to allow the user to enter a message. This will display
-    # automatically at the bottom of the page.
-    if prompt := st.chat_input("What is up?"):
+        # AI 分析内容
+        prompt = f"请根据以下八字信息为用户生成命理分析：\n{bazi_result}"
 
-        # Store and display the current prompt.
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.markdown(prompt)
+        openai.api_key = st.secrets["openai_api_key"]
+        try:
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            ai_response = response["choices"][0]["message"]["content"]
+        except openai.error.RateLimitError:
+            ai_response = "❌ OpenAI 配额已超出，请检查 API 使用状态或更换 API 密钥。"
 
-        # Generate a response using the OpenAI API.
-        stream = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
-        )
+        st.subheader("📖 AI 命理解读")
+        st.write(ai_response)
 
-        # Stream the response to the chat using `st.write_stream`, then store it in 
-        # session state.
-        with st.chat_message("assistant"):
-            response = st.write_stream(stream)
-        st.session_state.messages.append({"role": "assistant", "content": response})
+st.markdown("---")
+st.caption("© 2025 八字AI团队 | 仅供娱乐与参考")
+
+# 排盘函数实现（简化版）
+def get_bazi_info(birth_date, birth_time, birth_place, gender):
+    from convertdate import chinese
+    import ephem
+
+    # 构造完整 datetime
+    from datetime import datetime as dt
+    user_datetime = dt.combine(birth_date, birth_time)
+
+    # 计算农历年月日
+    lunar_year, lunar_month, lunar_day, is_leap = chinese.from_gregorian(
+        user_datetime.year, user_datetime.month, user_datetime.day
+    )
+
+    # 获取干支（此处使用简化假数据，正式项目需接入专业农历库）
+    # 建议后期接入开源库如 bazi-calculator、lunarcalendar 或自建天干地支算法
+    bazi_info = {
+        "阳历": user_datetime.strftime("%Y-%m-%d %H:%M"),
+        "农历": f"{lunar_year}年{lunar_month}月{lunar_day}日{'(闰)' if is_leap else ''}",
+        "出生地": birth_place,
+        "性别": gender,
+        "八字四柱": {
+            "年柱": "壬子",
+            "月柱": "乙卯",
+            "日柱": "丙辰",
+            "时柱": "庚午"
+        },
+        "五行比例": {
+            "金": 2,
+            "木": 2,
+            "水": 1,
+            "火": 2,
+            "土": 3
+        },
+        "当前大运": "癸亥 (2021-2031)"
+    }
+    return bazi_info
