@@ -86,12 +86,8 @@ if st.button("✨ 生成八字分析"):
             print("API 连接成功！")
             print(response)
 
-        except openai.error.AuthenticationError:
-            print("API 密钥错误，请检查您的 API 密钥。")
-        except openai.error.RateLimitError:
-            print("API 配额已超出，请检查您的使用情况。")
-        except openai.error.APIError as e:
-            print(f"API 请求失败，错误信息：{e}")
+        except openai.OpenAIError as e:
+            print("API 请求失败，错误信息：{e}")
         except Exception as e:
             print(f"发生错误: {e}")
         
