@@ -5,6 +5,18 @@ import streamlit as st
 import datetime
 import openai
 
+
+import streamlit as st
+import lunarcalendar
+
+# Check if lunarcalendar is installed and display version
+try:
+    st.write(f"lunarcalendar version: {lunarcalendar.__version__}")
+except AttributeError:
+    st.write("lunarcalendar is not installed or has no version attribute.")
+
+
+
 # 获取八字信息的函数
 def get_bazi_info(birth_date, birth_time, birth_place, gender):
     user_datetime = dt.combine(birth_date, birth_time)
