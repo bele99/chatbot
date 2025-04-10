@@ -72,8 +72,8 @@ if st.button("✨ 生成八字分析"):
 
         # AI 分析内容
         prompt = f"请根据以下八字信息为用户生成命理分析：\n{bazi_result}"
-        #openai.api_key = st.secrets["openai_api_key"]
-        openai.api_key = st.secrets["openai"]["api_key"]
+        openai.api_key = st.secrets["api_key"]
+        #openai.api_key = st.secrets["openai"]["api_key"]
         
         try:
             response = openai.completions.create(
