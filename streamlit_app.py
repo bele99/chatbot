@@ -92,7 +92,7 @@ if st.button("✨ 生成八字分析"):
             )
             
             print(response)
-            ai_response = response.choices[0].message['content']
+            ai_response = response.choices[0].message.content
         except openai.OpenAIError as e:
             ai_response = f"❌ OpenAI API 错误: {e}"
 
