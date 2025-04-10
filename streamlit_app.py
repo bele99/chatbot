@@ -14,13 +14,12 @@ def get_bazi_info(birth_date, birth_time, birth_place, gender):
     # Convert Solar to Lunar
     solar = Solar(user_datetime.year, user_datetime.month, user_datetime.day)
     lunar = Converter.Solar2Lunar(solar)
+    lunar_year = lunar.lunar_year
+    lunar_month = lunar.lunar_month
+    lunar_day = lunar.lunar_day
+    is_leap = lunar.is_leap_month
 
-    lunar_year = lunar_date.lunar_year
-    lunar_month = lunar_date.lunar_month
-    lunar_day = lunar_date.lunar_day
-    is_leap = lunar_date.is_leap_month
-
-    # 返回模拟排盘结果（此处可接专业农历库做真实排盘）
+    # Return simulated Bazi info (you can replace it with actual logic)
     bazi_info = {
         "阳历": user_datetime.strftime("%Y-%m-%d %H:%M"),
         "农历": f"{lunar_year}年{lunar_month}月{lunar_day}日{'(闰)' if is_leap else ''}",
