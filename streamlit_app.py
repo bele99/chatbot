@@ -81,6 +81,8 @@ if st.button("✨ 生成八字分析"):
             ai_response = response["choices"][0]["message"]["content"]
         except openai.error.RateLimitError:
             ai_response = "❌ OpenAI 配额已超出，请检查 API 使用状态或更换 API 密钥。"
+        except openai.error.OpenAIError as e:  # Catch any OpenAI errors
+            ai_response = f"❌ OpenAI API 错误: {e}"
 
         st.subheader("📖 AI 命理解读")
         st.write(ai_response)
