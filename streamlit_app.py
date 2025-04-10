@@ -5,8 +5,6 @@ import streamlit as st
 import datetime
 import openai
 
-# Set page configuration first
-st.set_page_config(page_title="AI 八字分析", layout="centered")
 
 # 获取八字信息的函数
 def get_bazi_info(birth_date, birth_time, birth_place, gender):
